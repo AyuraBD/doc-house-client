@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+.font-source {
+  font-family: "Source Sans 3", sans-serif;
+}
+.primary-color {
+  color: #07332F;
+}
+.bg-primary-color{
+  background-color: #07332F;
+}
+.secondary-color {
+  color: #F7A582;
+}
+.bg-secondary-color {
+  background-color: #F7A582;
+}
+
+@import "tailwindcss";
+@plugin "daisyui"{
+  themes: light --default
+}
