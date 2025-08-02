@@ -2,9 +2,10 @@ import { Link, NavLink } from 'react-router-dom'
 import Logo from '../../assets/logo.png'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../Providers/AuthProviders';
+import Loading from '../Loading/Loading';
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
-  const {user, logOut} = useContext(AuthContext);
+  const {user, loading, logOut} = useContext(AuthContext);
   useEffect(() =>{
     const handleScroll = () =>{
       setScrolled(window.scrollY > 70 );
@@ -27,6 +28,11 @@ const Navbar = () => {
     .catch(() =>{
 
     })
+  }
+  if(loading){
+    return (
+      <Loading></Loading>
+    )
   }
   return (
     <div className={`z-10 navbar fixed ${scrolled ? 'shadow-2xl bg-primary-color xl:py-3' : 'bg-primary-color xl:py-3'} transition-all py-3 px-4 md:px-8 lg:px-12 xl:px-32 text-white`}>

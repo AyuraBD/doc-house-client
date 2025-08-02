@@ -9,12 +9,13 @@ import { AuthContext } from '../../Providers/AuthProviders';
 import useAxiosSecure from '../../Hooks/useAxiosSecure/useAxiosSecure';
 import { updateProfile } from 'firebase/auth';
 import Auth from '../../firebase/firebase.config';
+import Loading from '../../Shared/Loading/Loading';
 const Signup = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
-  const {createUser} = useContext(AuthContext);
+  const {createUser, loading} = useContext(AuthContext);
   const AxiosSecure = useAxiosSecure();
 
   const handleSignup = (e) =>{
@@ -58,8 +59,12 @@ const Signup = () => {
     })
     .catch(err => {
       setError(err.message);
-    })
-    
+    }) 
+  }
+  if(loading){
+    return (
+      <Loading></Loading>
+    )
   }
   return (
     <div className="flex flex-col lg:flex-row">

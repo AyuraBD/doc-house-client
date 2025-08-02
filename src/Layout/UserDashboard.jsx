@@ -1,16 +1,17 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAxiosSecure from '../Hooks/useAxiosSecure/useAxiosSecure'
 import Navbar from '../Shared/Navbar/Navbar'
-import { AuthContext } from '../Providers/AuthProviders';
+import useAuth from '../Hooks/useAuth/useAuth'
 
 const UserDashboard = () => {
   const AxiosSecure = useAxiosSecure();
-  const {user} = useContext(AuthContext);
+  const {user} = useAuth();
+  console.log(user);
   const [myAppointments, setMyAppointments] = useState([]);
   useEffect(()=>{
-    AxiosSecure.get(`/myappointments?email=${user.email}`, {withCredentials: true})
+    AxiosSecure.get(`/myappointments?email=${user?.email}`)
     .then(res => setMyAppointments(res.data))
-    .then(err => console.log(err.message))
+    .catch(err => console.log(err.message));
   },[])
   console.log(myAppointments);
   return (
@@ -23,14 +24,13 @@ const UserDashboard = () => {
         <div className='bg-base-300 w-full md:w-9/12 lg:w-10/12 px-4 py-4 pt-22 h-screen'>
           <div>
             <h3 className='text-2xl font-medium mb-3'>My Appointments</h3>
-
           </div>
 
           <div className="overflow-x-auto">
             <table className="table">
               {/* head */}
-              <thead>
-                <tr>
+              <thead className='bg-base-500'>
+                <tr className='bg-[#535a55] text-white'>
                   <th>SL</th>
                   <th>NAME</th>
                   <th>SERVICE</th>

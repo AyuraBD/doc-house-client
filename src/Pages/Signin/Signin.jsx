@@ -5,14 +5,13 @@ import SignupImg from '../../assets/signup/signup1.png';
 import vector from '../../assets/home/vector1.png'
 import vector2 from '../../assets/home/group7.png'
 import { AuthContext } from '../../Providers/AuthProviders';
-import useAxiosSecure from '../../Hooks/useAxiosSecure/useAxiosSecure';
+import Loading from '../../Shared/Loading/Loading'
 const Signin = () => {
-  const {signIn} = useContext(AuthContext);
+  const {signIn, loading} = useContext(AuthContext);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
-  const AxiosSecure = useAxiosSecure();
   const handleSignin = (e) =>{
     e.preventDefault();
     const form = e.target;
@@ -20,17 +19,17 @@ const Signin = () => {
     const password = form.password.value;
     signIn(userName, password)
     .then(res => {
-      const user = {email: res.user.email}
-      AxiosSecure.post('/jwt', user, {withCredentials: true})
-      .then(res => {
-        console.log(res.data);
-      })
       console.log(res.user);
       navigate(from, {replace: true});
     })
     .catch(err => {
       setError(err.message);
     })
+  }
+  if(loading){
+    return (
+      <Loading></Loading>
+    )
   }
   return (
     <div className="flex flex-col lg:flex-row">
